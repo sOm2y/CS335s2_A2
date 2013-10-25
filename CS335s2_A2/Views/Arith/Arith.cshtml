@@ -1,0 +1,19 @@
+﻿@model CS335s2_A2.Models.Arith
+
+@{
+    ViewBag.Title = "Arith";
+}
+<h2>Arith</h2>
+@using (Html.BeginForm("Arith", "Arith", FormMethod.Get))
+{
+   <p>M= @Html.TextBoxFor(m=>m.m)</p>
+    <p>N= @Html.TextBoxFor(n=>n.n)</p>
+   <input type="submit" value="Eval" />
+    <p>M+N= @Model.Sum</p>
+    <p>M-N= @Model.Mines</p>
+    <p>M*N= @Model.Times</p>
+    <p>M/N= @Model.divde M%N= @Model.mod</p>
+    
+  
+}
+

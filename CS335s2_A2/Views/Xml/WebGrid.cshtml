@@ -1,0 +1,59 @@
+﻿@model IEnumerable<CS335s2_A2.Models.JointProductModel>
+
+@{
+    ViewBag.Title = "WebGrid";
+}
+
+<h2>WebGrid</h2>
+
+
+
+
+@{
+    var grid = new WebGrid(
+        null,
+        defaultSort: ViewBag.sort, rowsPerPage: ViewBag.rowsPerPage, ajaxUpdateContainerId: "grid", ajaxUpdateCallback: "setArrows");
+    grid.Bind(Model, rowCount: ViewBag.count, autoSortAndPage: false);
+}
+
+<div id="gridContainer">
+    <div id="grid">
+    
+
+@grid.GetHtml(    
+            tableStyle : "table",
+            alternatingRowStyle : "alternate",
+            headerStyle : "header",
+            columns: grid.Columns(
+                grid.Column("ProductID", "ProductID"),
+                grid.Column("ProductName", "ProductName"),
+                  grid.Column("CategoryName", "CategoryName"),
+                
+                grid.Column("CompanyName", "CompanyName"),
+                
+              
+                grid.Column("Country","Country")
+            
+            )
+        )
+        @Html.Hidden("dir", grid.SortDirection) @Html.Hidden("col", grid.SortColumn)
+
+    </div>
+</div>
+@section script{
+<script type="text/javascript">
+
+    function setArrows() {
+        var dir = $('#dir').val();
+        var col = $('#col').val();
+        var header = $('th a[href*=' + col + ']');
+        if (dir == 'Ascending') {
+            header.text(header.text() + ' ▲');
+        }
+        if (dir == 'Descending') {
+            header.text(header.text() + ' ▼');
+        }
+    };
+
+</script>
+    }

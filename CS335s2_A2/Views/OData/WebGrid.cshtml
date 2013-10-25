@@ -1,0 +1,45 @@
+﻿@model IEnumerable<CS335s2_A2.Models.JointProductModel>
+
+@{
+    ViewBag.Title = "WebGrid";
+}
+
+<h2>WebGrid</h2>
+
+@{
+    
+    var grid = new WebGrid(
+        null,
+       defaultSort: ViewBag.sort, rowsPerPage: ViewBag.rowsPerPage, ajaxUpdateContainerId: "grid");
+    grid.Bind(Model, rowCount:20, autoSortAndPage: false);
+}
+
+
+<div id="gridContainer">
+    <div id="grid">
+    
+
+@grid.GetHtml(    
+            tableStyle : "table",
+            alternatingRowStyle : "alternate",
+            headerStyle : "header",
+            columns: grid.Columns(
+                grid.Column("ProductId", Sorter("ProductId", "ProductId", grid)),
+                grid.Column("ProductName", Sorter("ProductName", "ProductName", grid)),
+                grid.Column("CategoryName", Sorter("CategoryName","CategoryName",grid)),
+                grid.Column("CompanyName", Sorter("CompanyName", "CompanyName", grid)),
+                
+               
+               
+                grid.Column("Country", Sorter("Country", "Country", grid))
+              
+            )
+        )
+
+    </div>
+</div>
+@functions {
+    public static string Sorter(string columnName, string columnHeader, WebGrid grid){
+        return string.Format("{0} {1}", columnHeader, grid.SortColumn == columnName ? grid.SortDirection == SortDirection.Ascending ? "▲" : "▼" : string.Empty);
+    }
+}
